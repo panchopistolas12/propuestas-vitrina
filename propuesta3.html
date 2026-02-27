@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Don Pepe — Productos Chilenos</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--rojo:#d42b2b;--rojo2:#f03d3d;--amarillo:#f5c842;--crema:#fffbf2;--texto:#1a1a1a;--gris:#6b6b6b;--card:#ffffff}
+body{background:var(--crema);font-family:'Plus Jakarta Sans',sans-serif;color:var(--texto);overflow-x:hidden}
+nav{display:flex;justify-content:space-between;align-items:center;padding:1.2rem 2.5rem;background:var(--rojo);position:sticky;top:0;z-index:50}
+.logo{font-family:'Fraunces',serif;font-size:1.6rem;color:#fff;font-style:italic;letter-spacing:.02em}
+.logo strong{font-style:normal;font-weight:700;background:var(--amarillo);color:var(--rojo);padding:.1rem .5rem;margin-right:.3rem;border-radius:3px}
+nav ul{list-style:none;display:flex;gap:2rem}
+nav ul a{color:rgba(255,255,255,.8);text-decoration:none;font-size:.85rem;font-weight:500;transition:color .2s}
+nav ul a:hover{color:var(--amarillo)}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer}
+.hamburger span{display:block;width:24px;height:2.5px;background:#fff;border-radius:2px;transition:all .3s}
+.hamburger.open span:nth-child(1){transform:translateY(7.5px) rotate(45deg)}
+.hamburger.open span:nth-child(2){opacity:0}
+.hamburger.open span:nth-child(3){transform:translateY(-7.5px) rotate(-45deg)}
+.mobile-menu{display:none;position:fixed;inset:0;background:var(--rojo);z-index:100;flex-direction:column;align-items:center;justify-content:center;gap:2.5rem}
+.mobile-menu.open{display:flex}
+.mobile-menu a{color:#fff;text-decoration:none;font-family:'Fraunces',serif;font-size:2.5rem;font-style:italic}
+.close-menu{position:absolute;top:1.5rem;right:2rem;background:none;border:none;color:rgba(255,255,255,.7);font-size:1.8rem;cursor:pointer}
+.hero{background:var(--rojo);padding:5rem 2.5rem 7rem;position:relative;overflow:hidden}
+.hero::after{content:'';position:absolute;bottom:-2px;left:0;right:0;height:80px;background:var(--crema);clip-path:polygon(0 100%,100% 100%,100% 0)}
+.hero-inner{max-width:1000px;margin:0 auto;display:grid;grid-template-columns:1fr auto;gap:3rem;align-items:center}
+.hero-text{}
+.hero-emoji{font-size:8rem;line-height:1;filter:drop-shadow(0 10px 30px rgba(0,0,0,.3));animation:float 3s ease-in-out infinite}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+.hero-tag{display:inline-flex;align-items:center;gap:.5rem;background:var(--amarillo);color:var(--rojo);padding:.35rem 1rem;border-radius:50px;font-size:.75rem;font-weight:600;letter-spacing:.05em;text-transform:uppercase;margin-bottom:1.5rem}
+.hero h1{font-family:'Fraunces',serif;font-size:clamp(3rem,7vw,5rem);color:#fff;line-height:1.05;margin-bottom:1rem}
+.hero h1 span{color:var(--amarillo);font-style:italic}
+.hero p{color:rgba(255,255,255,.75);font-size:1rem;line-height:1.75;margin-bottom:2.5rem;max-width:480px;font-weight:300}
+.btn-wsp{display:inline-flex;align-items:center;gap:.7rem;background:#fff;color:#1a7a3e;padding:.85rem 2rem;border-radius:50px;text-decoration:none;font-weight:600;font-size:.9rem;transition:all .25s;box-shadow:0 4px 20px rgba(0,0,0,.15)}
+.btn-wsp:hover{background:#25D366;color:#fff;transform:translateY(-2px);box-shadow:0 8px 30px rgba(37,211,102,.4)}
+.btn-wsp svg,.btn-card svg,.btn-wsp-big svg{width:18px;height:18px;fill:currentColor}
+.band{background:var(--amarillo);padding:.8rem 2.5rem;display:flex;gap:3rem;overflow:hidden;white-space:nowrap}
+.band span{font-weight:600;font-size:.85rem;color:var(--rojo);letter-spacing:.05em;display:flex;align-items:center;gap:.5rem}
+.section-header{padding:4rem 2.5rem 2rem;max-width:1100px;margin:0 auto}
+.section-header h2{font-family:'Fraunces',serif;font-size:clamp(2rem,4vw,2.8rem);color:var(--texto)}
+.section-header h2 span{color:var(--rojo);font-style:italic}
+.section-header p{color:var(--gris);margin-top:.5rem;font-weight:300}
+.productos{padding:1rem 2.5rem 5rem;max-width:1100px;margin:0 auto}
+.productos-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.5rem}
+.card{background:var(--card);border-radius:20px;overflow:hidden;border:2px solid transparent;transition:all .3s;box-shadow:0 2px 16px rgba(0,0,0,.06)}
+.card:hover{border-color:var(--rojo);transform:translateY(-4px);box-shadow:0 12px 40px rgba(212,43,43,.12)}
+.card-img{height:190px;display:flex;align-items:center;justify-content:center;font-size:5.5rem;background:linear-gradient(135deg,#fff5f5,#ffe8e8);position:relative}
+.card-tag{position:absolute;top:12px;left:12px;background:var(--rojo);color:#fff;font-size:.65rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:.3rem .7rem;border-radius:50px}
+.card-body{padding:1.4rem}
+.card-name{font-family:'Fraunces',serif;font-size:1.25rem;margin-bottom:.5rem;font-weight:700}
+.card-desc{font-size:.85rem;color:var(--gris);line-height:1.65;margin-bottom:1.3rem;font-weight:300}
+.card-footer{display:flex;justify-content:space-between;align-items:center;gap:.5rem}
+.card-price{font-size:1.15rem;font-weight:700;color:var(--rojo)}
+.btn-card{display:inline-flex;align-items:center;gap:.4rem;background:#25D366;color:#fff;padding:.55rem 1.2rem;border-radius:50px;text-decoration:none;font-size:.82rem;font-weight:600;transition:all .25s;white-space:nowrap}
+.btn-card:hover{background:#1ea855;transform:scale(1.03)}
+.cta-band{background:var(--rojo);margin:2rem 0;padding:4rem 2.5rem;text-align:center}
+.cta-band h2{font-family:'Fraunces',serif;font-size:clamp(1.8rem,4vw,2.5rem);color:#fff;margin-bottom:1rem}
+.cta-band h2 span{color:var(--amarillo);font-style:italic}
+.cta-band p{color:rgba(255,255,255,.7);margin-bottom:2rem;font-weight:300}
+.btn-wsp-big{display:inline-flex;align-items:center;gap:.7rem;background:#25D366;color:#fff;padding:1rem 2.5rem;border-radius:50px;text-decoration:none;font-weight:600;font-size:1rem;transition:all .25s;box-shadow:0 4px 20px rgba(37,211,102,.3)}
+.btn-wsp-big:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(37,211,102,.5)}
+footer{padding:2.5rem 2.5rem;display:flex;justify-content:space-between;align-items:center;border-top:2px solid rgba(0,0,0,.06);flex-wrap:wrap;gap:1rem}
+.footer-logo{font-family:'Fraunces',serif;font-size:1.2rem;color:var(--rojo);font-style:italic}
+footer small{color:var(--gris);font-size:.8rem}
+@media(max-width:768px){nav{padding:1.2rem 1.5rem}nav ul{display:none!important}.hamburger{display:flex}.hero{padding:4rem 1.5rem 6rem}.hero-inner{grid-template-columns:1fr}.hero-emoji{font-size:5rem;text-align:center}.band{padding:.7rem 1.5rem;gap:2rem}.section-header{padding:3rem 1.5rem 1.5rem}.productos{padding:1rem 1.2rem 4rem}.productos-grid{grid-template-columns:1fr}.cta-band{padding:3rem 1.5rem}.btn-wsp-big{width:100%;justify-content:center}.footer{padding:2rem 1.5rem;flex-direction:column;text-align:center}}
+</style>
+</head>
+<body>
+<nav>
+  <div class="logo"><strong>Don</strong> Pepe</div>
+  <ul><li><a href="#productos">Productos</a></li><li><a href="#contacto">Contacto</a></li></ul>
+  <div class="hamburger" id="hb3" onclick="toggleMenu('mm3','hb3')"><span></span><span></span><span></span></div>
+</nav>
+<div class="mobile-menu" id="mm3">
+  <button class="close-menu" onclick="toggleMenu('mm3','hb3')">✕</button>
+  <a href="#productos" onclick="toggleMenu('mm3','hb3')">Productos</a>
+  <a href="#contacto" onclick="toggleMenu('mm3','hb3')">Contacto</a>
+</div>
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-text">
+      <div class="hero-tag">🇨🇱 Hecho en Chile con orgullo</div>
+      <h1>Los mejores <span>sabores</span> del campo</h1>
+      <p>Alfajores, chorizos, prietas, arrollado y cuchuflíes artesanales. Producto fresco, pedido directo.</p>
+      <a href="https://wa.me/56912345678?text=Hola%20Don%20Pepe!%20Vi%20su%20página%20y%20quiero%20consultar" class="btn-wsp" target="_blank">
+        <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M11.999 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2.546 21l3.918-.91A9.955 9.955 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18a7.946 7.946 0 01-4.054-1.107l-.29-.173-3.007.698.71-2.926-.19-.3A7.944 7.944 0 014 12c0-4.418 3.582-8 8-8s8 3.582 8 8-3.582 8-8 8z"/></svg>
+        ¡Pedir ahora!
+      </a>
+    </div>
+    <div class="hero-emoji">🧑‍🍳</div>
+  </div>
+</section>
+<div class="band">
+  <span>🍪 Alfajores artesanales</span>
+  <span>🌭 Chorizos frescos</span>
+  <span>🩸 Prietas caseras</span>
+  <span>🥩 Arrollado Huaso</span>
+  <span>🍬 Cuchuflíes</span>
+  <span>🍪 Alfajores artesanales</span>
+  <span>🌭 Chorizos frescos</span>
+</div>
+<div class="section-header" id="productos">
+  <h2>Nuestros <span>Productos</span></h2>
+  <p>Todo fresco, todo artesanal, todo con sabor de verdad</p>
+</div>
+<section class="productos">
+  <div class="productos-grid">
+    <div class="card"><div class="card-img"><span class="card-tag">Dulces</span>🍪</div><div class="card-body"><div class="card-name">Alfajores Artesanales</div><p class="card-desc">Masa suave con manjar natural entre dos galletas, espolvoreados con azúcar flor. ¡Una docena para compartir!</p><div class="card-footer"><span class="card-price">$4.500 / docena</span><a href="https://wa.me/56912345678?text=Hola!%20Quiero%20los%20Alfajores" class="btn-card" target="_blank"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M11.999 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2.546 21l3.918-.91A9.955 9.955 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18a7.946 7.946 0 01-4.054-1.107l-.29-.173-3.007.698.71-2.926-.19-.3A7.944 7.944 0 014 12c0-4.418 3.582-8 8-8s8 3.582 8 8-3.582 8-8 8z"/></svg> Consultar</a></div></div></div>
+    <div class="card"><div class="card-img"><span class="card-tag">Embutidos</span>🌭</div><div class="card-body"><div class="card-name">Chorizos Artesanales</div><p class="card-desc">Con carne de cerdo seleccionada y especias naturales. Perfectos para el asado del domingo.</p><div class="card-footer"><span class="card-price">$3.800 / kg</span><a href="https://wa.me/56912345678?text=Hola!%20Quiero%20los%20Chorizos" class="btn-card" target="_blank"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M11.999 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2.546 21l3.918-.91A9.955 9.955 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18a7.946 7.946 0 01-4.054-1.107l-.29-.173-3.007.698.71-2.926-.19-.3A7.944 7.944 0 014 12c0-4.418 3.582-8 8-8s8 3.582 8 8-3.582 8-8 8z"/></svg> Consultar</a></div></div></div>
+    <div class="card"><div class="card-img"><span class="card-tag">Embutidos</span>🩸</div><div class="card-body"><div class="card-name">Prietas Caseras</div><p class="card-desc">Receta tradicional chilena, con sangre de cerdo, arroz y especias. ¡Para el asado no pueden faltar!</p><div class="card-footer"><span class="card-price">$3.200 / kg</span><a href="https://wa.me/56912345678?text=Hola!%20Quiero%20las%20Prietas" class="btn-card" target="_blank"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M11.999 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2.546 21l3.918-.91A9.955 9.955 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18a7.946 7.946 0 01-4.054-1.107l-.29-.173-3.007.698.71-2.926-.19-.3A7.944 7.944 0 014 12c0-4.418 3.582-8 8-8s8 3.582 8 8-3.582 8-8 8z"/></svg> Consultar</a></div></div></div>
+    <div class="card"><div class="card-img"><span class="card-tag">Embutidos</span>🥩</div><div class="card-body"><div class="card-name">Arrollado Huaso</div><p class="card-desc">Plancha de cerdo con ají de color, ajo y especias. Listo para laminarlo y ponerlo en la mesa.</p><div class="card-footer"><span class="card-price">$5.500 / kg</span><a href="https://wa.me/56912345678?text=Hola!%20Quiero%20el%20Arrollado%20Huaso" class="btn-card" target="_blank"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M11.999 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2.546 21l3.918-.91A9.955 9.955 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18a7.946 7.946 0 01-4.054-1.107l-.29-.173-3.007.698.71-2.926-.19-.3A7.944 7.944 0 014 12c0-4.418 3.582-8 8-8s8 3.582 8 8-3.582 8-8 8z"/></svg> Consultar</a></div></div></div>
+    <div class="card"><div class="card-img"><span class="card-tag">Dulces</span>🍬</div><div class="card-body"><div class="card-name">Cuchuflíes</div><p class="card-desc">Barquillos crujientes rellenos con manjar casero. El dulce de siempre, que nunca pasa de moda.</p><div class="card-footer"><span class="card-price">$2.800 / docena</span><a href="https://wa.me/56912345678?text=Hola!%20Quiero%20los%20Cuchuflies" class="btn-card" target="_blank"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M11.999 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2.546 21l3.918-.91A9.955 9.955 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18a7.946 7.946 0 01-4.054-1.107l-.29-.173-3.007.698.71-2.926-.19-.3A7.944 7.944 0 014 12c0-4.418 3.582-8 8-8s8 3.582 8 8-3.582 8-8 8z"/></svg> Consultar</a></div></div></div>
+  </div>
+</section>
+<div class="cta-band" id="contacto">
+  <h2>¿Quieres hacer un <span>pedido?</span></h2>
+  <p>Escríbenos directo al WhatsApp y te respondemos al tiro</p>
+  <a href="https://wa.me/56912345678?text=Hola%20Don%20Pepe!%20Quiero%20hacer%20un%20pedido" class="btn-wsp-big" target="_blank">
+    <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M11.999 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2.546 21l3.918-.91A9.955 9.955 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18a7.946 7.946 0 01-4.054-1.107l-.29-.173-3.007.698.71-2.926-.19-.3A7.944 7.944 0 014 12c0-4.418 3.582-8 8-8s8 3.582 8 8-3.582 8-8 8z"/></svg>
+    ¡Escribir a Don Pepe!
+  </a>
+</div>
+<footer>
+  <div class="footer-logo">Don Pepe</div>
+  <small>© 2025 · Viña del Mar, Chile · Productos 100% artesanales</small>
+</footer>
+<script>
+function toggleMenu(m,h){document.getElementById(h).classList.toggle('open');document.getElementById(m).classList.toggle('open');document.body.style.overflow=document.getElementById(m).classList.contains('open')?'hidden':'';}
+</script>
+</body>
+</html>

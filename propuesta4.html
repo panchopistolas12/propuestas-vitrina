@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mercado Artesanal</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&family=Bebas+Neue&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --terracota:#c24f2a;
+  --oliva:#4a5c2a;
+  --crema:#f7f3ec;
+  --negro:#111009;
+  --arena:#e8dfc8;
+  --texto:#1c1a14;
+  --muted:#7a7060;
+}
+body{background:var(--crema);font-family:'Space Grotesk',sans-serif;color:var(--texto);overflow-x:hidden}
+
+/* NAV */
+nav{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:1rem 2.5rem;background:var(--negro);position:sticky;top:0;z-index:50;
+}
+.logo{display:flex;align-items:center;gap:.6rem}
+.logo-icon{width:36px;height:36px;background:var(--terracota);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1rem}
+.logo-text{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;color:#fff;letter-spacing:.08em}
+nav ul{list-style:none;display:flex;gap:2rem}
+nav ul a{color:rgba(255,255,255,.5);text-decoration:none;font-size:.8rem;font-weight:500;letter-spacing:.08em;text-transform:uppercase;transition:color .2s}
+nav ul a:hover{color:var(--terracota)}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer}
+.hamburger span{display:block;width:22px;height:2px;background:#fff;transition:all .3s}
+.hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.hamburger.open span:nth-child(2){opacity:0}
+.hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+.mobile-menu{display:none;position:fixed;inset:0;background:var(--negro);z-index:100;flex-direction:column;align-items:center;justify-content:center;gap:2.5rem}
+.mobile-menu.open{display:flex}
+.mobile-menu a{color:#fff;text-decoration:none;font-family:'Bebas Neue',sans-serif;font-size:3rem;letter-spacing:.1em;transition:color .2s}
+.mobile-menu a:hover{color:var(--terracota)}
+.close-menu{position:absolute;top:1.5rem;right:2rem;background:none;border:none;color:rgba(255,255,255,.5);font-size:1.5rem;cursor:pointer}
+
+/* HERO - GRID EDITORIAL */
+.hero{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  min-height:calc(100vh - 60px);
+  border-bottom:3px solid var(--negro);
+}
+.hero-left{
+  background:var(--terracota);
+  padding:4rem 3rem;
+  display:flex;flex-direction:column;justify-content:space-between;
+  border-right:3px solid var(--negro);
+  position:relative;overflow:hidden;
+}
+.hero-left::after{
+  content:'';position:absolute;
+  bottom:-60px;right:-60px;
+  width:250px;height:250px;
+  border-radius:50%;
+  border:40px solid rgba(255,255,255,.08);
+}
+.hero-num{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:10rem;line-height:1;color:rgba(255,255,255,.12);
+  position:absolute;bottom:-1rem;left:2rem;
+  user-select:none;
+}
+.hero-tag{
+  display:inline-flex;align-items:center;gap:.5rem;
+  background:rgba(255,255,255,.15);color:#fff;
+  padding:.4rem 1rem;border-radius:2px;
+  font-size:.72rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;
+  width:fit-content;
+  border:1px solid rgba(255,255,255,.2);
+}
+.hero-left h1{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(4rem,8vw,7rem);
+  color:#fff;line-height:.95;letter-spacing:.03em;
+  position:relative;z-index:1;
+}
+.hero-left h1 span{
+  display:block;color:var(--arena);font-size:.6em;letter-spacing:.08em;
+}
+.hero-right{
+  background:var(--crema);
+  display:flex;flex-direction:column;justify-content:space-between;
+  padding:4rem 3rem;
+}
+.hero-desc{font-size:1.05rem;line-height:1.8;color:var(--muted);font-weight:300;max-width:380px}
+.hero-desc strong{color:var(--texto);font-weight:600}
+.hero-actions{display:flex;flex-direction:column;gap:1rem}
+.btn-wsp{
+  display:flex;align-items:center;justify-content:space-between;
+  background:#25D366;color:#fff;padding:1.1rem 1.5rem;
+  text-decoration:none;font-weight:600;font-size:.9rem;letter-spacing:.03em;
+  transition:all .25s;
+  border:2px solid #25D366;
+}
+.btn-wsp:hover{background:transparent;color:#25D366}
+.btn-wsp svg{width:20px;height:20px;fill:currentColor}
+.btn-scroll{
+  display:flex;align-items:center;justify-content:space-between;
+  border:2px solid var(--negro);color:var(--negro);padding:1.1rem 1.5rem;
+  text-decoration:none;font-weight:600;font-size:.9rem;letter-spacing:.03em;
+  transition:all .25s;background:transparent;
+}
+.btn-scroll:hover{background:var(--negro);color:var(--crema)}
+.hero-products-preview{
+  display:flex;gap:.8rem;flex-wrap:wrap;
+}
+.product-chip{
+  background:var(--negro);color:var(--crema);
+  padding:.35rem .8rem;font-size:.75rem;font-weight:500;letter-spacing:.05em;
+  border-radius:2px;
+}
+
+/* TICKER */
+.ticker{
+  background:var(--oliva);padding:.7rem 0;
+  overflow:hidden;white-space:nowrap;border-bottom:2px solid var(--negro);
+}
+.ticker-inner{
+  display:inline-flex;gap:3rem;
+  animation:ticker 20s linear infinite;
+}
+@keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.ticker span{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:1.1rem;letter-spacing:.12em;color:rgba(255,255,255,.8);
+  display:flex;align-items:center;gap:1rem;
+}
+.ticker span::after{content:'✦';color:var(--arena);opacity:.5}
+
+/* PRODUCTOS */
+.productos-header{
+  display:flex;justify-content:space-between;align-items:flex-end;
+  padding:3rem 2.5rem 2rem;
+  border-bottom:2px solid var(--negro);
+}
+.productos-header h2{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(3rem,6vw,5rem);letter-spacing:.05em;color:var(--negro);line-height:1;
+}
+.productos-header p{color:var(--muted);font-size:.85rem;max-width:250px;text-align:right;line-height:1.6}
+
+.productos-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(300px,1fr));
+}
+.card{
+  border-right:2px solid var(--negro);
+  border-bottom:2px solid var(--negro);
+  transition:background .2s;
+  cursor:default;
+}
+.card:hover{background:var(--arena)}
+.card-img{
+  height:200px;display:flex;align-items:center;justify-content:center;
+  font-size:5rem;
+  border-bottom:2px solid var(--negro);
+  background:var(--crema);
+  position:relative;overflow:hidden;
+}
+.card-img::before{
+  content:'';position:absolute;
+  top:-30px;right:-30px;width:120px;height:120px;
+  border-radius:50%;background:rgba(194,79,42,.08);
+}
+.card-num{
+  position:absolute;top:12px;left:14px;
+  font-family:'Bebas Neue',sans-serif;
+  font-size:1rem;color:rgba(0,0,0,.15);letter-spacing:.1em;
+}
+.card-body{padding:1.5rem}
+.card-cat{font-size:.68rem;text-transform:uppercase;letter-spacing:.15em;color:var(--terracota);font-weight:500;margin-bottom:.4rem}
+.card-name{font-family:'Bebas Neue',sans-serif;font-size:1.8rem;letter-spacing:.04em;line-height:1;margin-bottom:.6rem}
+.card-desc{font-size:.85rem;color:var(--muted);line-height:1.65;margin-bottom:1.5rem;font-weight:300}
+.card-footer{display:flex;justify-content:space-between;align-items:center;gap:.5rem}
+.card-price{font-size:1rem;font-weight:700;color:var(--negro)}
+.btn-card{
+  display:inline-flex;align-items:center;gap:.5rem;
+  background:#25D366;color:#fff;
+  padding:.55rem 1.2rem;text-decoration:none;
+  font-size:.78rem;font-weight:600;letter-spacing:.04em;
+  transition:all .2s;white-space:nowrap;
+  border:2px solid #25D366;
+}
+.btn-card:hover{background:transparent;color:#25D366}
+.btn-card svg{width:14px;height:14px;fill:currentColor}
+
+/* NOSOTROS */
+.nosotros{
+  display:grid;grid-template-columns:1fr 1fr;
+  border-top:3px solid var(--negro);
+}
+.nosotros-left{
+  background:var(--oliva);padding:5rem 3rem;
+  border-right:3px solid var(--negro);
+}
+.nosotros-left h2{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(3rem,5vw,4.5rem);letter-spacing:.04em;
+  color:#fff;line-height:.95;margin-bottom:2rem;
+}
+.nosotros-left h2 span{color:var(--arena)}
+.nosotros-left p{color:rgba(255,255,255,.65);line-height:1.85;font-size:.95rem;font-weight:300}
+.nosotros-right{
+  background:var(--arena);padding:5rem 3rem;
+  display:flex;flex-direction:column;gap:3rem;justify-content:center;
+}
+.stat-row{display:flex;align-items:baseline;gap:1rem;border-bottom:1px solid rgba(0,0,0,.12);padding-bottom:2rem}
+.stat-row:last-child{border-bottom:none;padding-bottom:0}
+.stat-big{font-family:'Bebas Neue',sans-serif;font-size:3.5rem;letter-spacing:.04em;color:var(--terracota)}
+.stat-text{font-size:.85rem;color:var(--muted);line-height:1.5;font-weight:300}
+.stat-text strong{color:var(--texto);font-weight:600;display:block}
+
+/* FOOTER */
+footer{
+  background:var(--negro);padding:3rem 2.5rem;
+  display:grid;grid-template-columns:1fr auto 1fr;
+  align-items:center;gap:2rem;border-top:3px solid var(--terracota);
+}
+.footer-logo{font-family:'Bebas Neue',sans-serif;font-size:1.8rem;color:#fff;letter-spacing:.1em}
+.btn-wsp-big{
+  display:flex;align-items:center;gap:.7rem;justify-content:center;
+  background:#25D366;color:#fff;padding:1rem 2rem;
+  text-decoration:none;font-weight:600;font-size:.9rem;letter-spacing:.04em;
+  transition:all .25s;border:2px solid #25D366;
+}
+.btn-wsp-big:hover{background:transparent;color:#25D366}
+.btn-wsp-big svg{width:18px;height:18px;fill:currentColor}
+footer small{color:rgba(255,255,255,.3);font-size:.75rem;text-align:right}
+
+@media(max-width:900px){
+  .hero{grid-template-columns:1fr}
+  .hero-left{min-height:60vh}
+  .nosotros{grid-template-columns:1fr}
+  .nosotros-left{border-right:none;border-bottom:3px solid var(--negro)}
+  footer{grid-template-columns:1fr;text-align:center}
+  footer small{text-align:center}
+}
+@media(max-width:768px){
+  nav{padding:1rem 1.5rem}
+  nav ul{display:none!important}
+  .hamburger{display:flex}
+  .hero-left{padding:3rem 2rem}
+  .hero-right{padding:3rem 2rem}
+  .hero-left h1{font-size:4rem}
+  .hero-num{font-size:7rem}
+  .productos-header{padding:2rem 1.5rem 1.5rem;flex-direction:column;align-items:flex-start;gap:1rem}
+  .productos-header p{text-align:left;max-width:100%}
+  .productos-grid{grid-template-columns:1fr}
+  .card{border-right:none}
+  .nosotros-left,.nosotros-right{padding:4rem 2rem}
+  .btn-wsp-big{width:100%}
+}
+</style>
+</head>
+<body>
+<nav>
+  <div class="logo">
+    <div class="logo-icon">🥩</div>
+    <div class="logo-text">Mercado Artesanal</div>
+  </div>
+  <ul>
+    <li><a href="#productos">Productos</a></li>
+    <li><a href="#nosotros">Nosotros</a></li>
+    <li><a href="#contacto">Contacto</a></li>
+  </ul>
+  <div class="hamburger" id="hb4" onclick="toggleMenu('mm4','hb4')"><span></span><span></span><span></span></div>
+</nav>
+
+<div class="mobile-menu" id="mm4">
+  <button class="close-menu" onclick="toggleMenu('mm4','hb4')">✕</button>
+  <a href="#productos" onclick="toggleMenu('mm4','hb4')">Productos</a>
+  <a href="#nosotros" onclick="toggleMenu('mm4','hb4')">Nosotros</a>
+  <a href="#contacto" onclick="toggleMenu('mm4','hb4')">Contacto</a>
+</div>
+
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-tag">🌾 100% Artesanal · Viña del Mar</div>
+    <h1>SABOR<span>CHILENO</span>DE VERDAD</h1>
+    <div class="hero-num">01</div>
+  </div>
+  <div class="hero-right">
+    <p class="hero-desc">
+      Chorizos, prietas, arrollado huaso, alfajores y cuchuflíes. 
+      <strong>Elaborados a mano con ingredientes frescos.</strong>
+      Sin preservantes, sin fábricas — solo el sabor de siempre.
+    </p>
+    <div class="hero-actions">
+      <a href="https://wa.me/56912345678?text=Hola!%20Vi%20su%20página%20y%20quiero%20consultar" class="btn-wsp" target="_blank">
+        <span>Consultar por WhatsApp</span>
+        <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M11.999 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2.546 21l3.918-.91A9.955 9.955 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18a7.946 7.946 0 01-4.054-1.107l-.29-.173-3.007.698.71-2.926-.19-.3A7.944 7.944 0 014 12c0-4.418 3.582-8 8-8s8 3.582 8 8-3.582 8-8 8z"/></svg>
+      </a>
+      <a href="#productos" class="btn-scroll">
+        <span>Ver productos</span>
+        <span>↓</span>
+      </a>
+    </div>
+    <div class="hero-products-preview">
+      <span class="product-chip">Alfajores</span>
+      <span class="product-chip">Chorizos</span>
+      <span class="product-chip">Prietas</span>
+      <span class="product-chip">Arrollado</span>
+      <span class="product-chip">Cuchuflíes</span>
+    </div>
+  </div>
+</section>
+
+<div class="ticker">
+  <div class="ticker-inner">
+    <span>Alfajores artesanales</span>
+    <span>Chorizos frescos</span>
+    <span>Prietas caseras</span>
+    <span>Arrollado huaso</span>
+    <span>Cuchuflíes con manjar</span>
+    <span>Sin preservantes</span>
+    <span>Hecho en Viña del Mar</span>
+    <span>Alfajores artesanales</span>
+    <span>Chorizos frescos</span>
+    <span>Prietas caseras</span>
+    <span>Arrollado huaso</span>
+    <span>Cuchuflíes con manjar</span>
+    <span>Sin preservantes</span>
+    <span>Hecho en Viña del Mar</span>
+  </div>
+</div>
+
+<div class="productos-header" id="productos">
+  <h2>NUESTRO<br>CATÁLOGO</h2>
+  <p>Todos los productos son frescos y elaborados de forma artesanal bajo pedido</p>
+</div>
+
+<div class="productos-grid">
+
+  <div class="card">
+    <div class="card-img">
+      <span class="card-num">01</span>
+      🍪
+    </div>
+    <div class="card-body">
+      <div class="card-cat">Dulces Tradicionales</div>
+      <div class="card-name">Alfajores</div>
+      <p class="card-desc">Masa suave con manjar natural entre dos galletas tradicionales. Espolvoreados con azúcar flor. Disponibles por docena.</p>
+      <div class="card-footer">
+        <span class="card-price">$4.500 / docena</span>
+        <a href="https://wa.me/56912345678?text=Me%20interesan%20los%20Alfajores" class="btn-card" target="_blank">
+          <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M11.999 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2.546 21l3.918-.91A9.955 9.955 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18a7.946 7.946 0 01-4.054-1.107l-.29-.173-3.007.698.71-2.926-.19-.3A7.944 7.944 0 014 12c0-4.418 3.582-8 8-8s8 3.582 8 8-3.582 8-8 8z"/></svg>
+          Consultar
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-img"><span class="card-num">02</span>🌭</div>
+    <div class="card-body">
+      <div class="card-cat">Embutidos</div>
+      <div class="card-name">Chorizos</div>
+      <p class="card-desc">Carne de cerdo seleccionada con especias naturales. Para el asado del fin de semana o la cazuela de la semana.</p>
+      <div class="card-footer">
+        <span class="card-price">$3.800 / kg</span>
+        <a href="https://wa.me/56912345678?text=Me%20interesan%20los%20Chorizos" class="btn-card" target="_blank">
+          <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M11.999 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2.546 21l3.918-.91A9.955 9.955 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18a7.946 7.946 0 01-4.054-1.107l-.29-.173-3.007.698.71-2.926-.19-.3A7.944 7.944 0 014 12c0-4.418 3.582-8 8-8s8 3.582 8 8-3.582 8-8 8z"/></svg>
+          Consultar
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-img"><span class="card-num">03</span>🩸</div>
+    <div class="card-body">
+      <div class="card-cat">Embutidos</div>
+      <div class="card-name">Prietas</div>
+      <p class="card-desc">Receta de siempre: sangre de cerdo, arroz y especias. Parte esencial de cualquier buen asado chileno.</p>
+      <div class="card-footer">
+        <span class="card-price">$3.200 / kg</span>
+        <a href="https://wa.me/56912345678?text=Me%20interesan%20las%20Prietas" class="btn-card" target="_blank">
+          <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M11.999 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2.546 21l3.918-.91A9.955 9.955 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18a7.946 7.946 0 01-4.054-1.107l-.29-.173-3.007.698.71-2.926-.19-.3A7.944 7.944 0 014 12c0-4.418 3.582-8 8-8s8 3.582 8 8-3.582 8-8 8z"/></svg>
+          Consultar
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-img"><span class="card-num">04</span>🥩</div>
+    <div class="card-body">
+      <div class="card-cat">Embutidos</div>
+      <div class="card-name">Arrollado Huaso</div>
+      <p class="card-desc">Plancha de cerdo con ají de color, ajo y especias artesanales. Para laminar y servir en cualquier reunión.</p>
+      <div class="card-footer">
+        <span class="card-price">$5.500 / kg</span>
+        <a href="https://wa.me/56912345678?text=Me%20interesa%20el%20Arrollado%20Huaso" class="btn-card" target="_blank">
+          <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M11.999 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2.546 21l3.918-.91A9.955 9.955 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18a7.946 7.946 0 01-4.054-1.107l-.29-.173-3.007.698.71-2.926-.19-.3A7.944 7.944 0 014 12c0-4.418 3.582-8 8-8s8 3.582 8 8-3.582 8-8 8z"/></svg>
+          Consultar
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-img"><span class="card-num">05</span>🍬</div>
+    <div class="card-body">
+      <div class="card-cat">Dulces Tradicionales</div>
+      <div class="card-name">Cuchuflíes</div>
+      <p class="card-desc">Barquillos crujientes rellenos de manjar casero. El clásico irresistible hecho con la receta de siempre.</p>
+      <div class="card-footer">
+        <span class="card-price">$2.800 / docena</span>
+        <a href="https://wa.me/56912345678?text=Me%20interesan%20los%20Cuchuflies" class="btn-card" target="_blank">
+          <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M11.999 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2.546 21l3.918-.91A9.955 9.955 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18a7.946 7.946 0 01-4.054-1.107l-.29-.173-3.007.698.71-2.926-.19-.3A7.944 7.944 0 014 12c0-4.418 3.582-8 8-8s8 3.582 8 8-3.582 8-8 8z"/></svg>
+          Consultar
+        </a>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<section class="nosotros" id="nosotros">
+  <div class="nosotros-left">
+    <h2>TRADICIÓN<br>QUE <span>SABE</span><br>DIFERENTE</h2>
+    <p>Llevamos más de 20 años haciendo los mismos productos con la misma dedicación. Sin fábricas, sin atajos. Cada pedido se prepara fresco con ingredientes seleccionados de la región.</p>
+  </div>
+  <div class="nosotros-right">
+    <div class="stat-row">
+      <span class="stat-big">+20</span>
+      <div class="stat-text"><strong>Años de experiencia</strong>Elaborando con las mismas recetas familiares</div>
+    </div>
+    <div class="stat-row">
+      <span class="stat-big">0</span>
+      <div class="stat-text"><strong>Preservantes artificiales</strong>Todo natural, todo fresco, todo artesanal</div>
+    </div>
+    <div class="stat-row">
+      <span class="stat-big">+300</span>
+      <div class="stat-text"><strong>Clientes satisfechos</strong>Que repiten porque el sabor habla solo</div>
+    </div>
+  </div>
+</section>
+
+<footer id="contacto">
+  <div class="footer-logo">MERCADO ARTESANAL</div>
+  <a href="https://wa.me/56912345678?text=Hola!%20Quiero%20hacer%20un%20pedido" class="btn-wsp-big" target="_blank">
+    <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M11.999 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2.546 21l3.918-.91A9.955 9.955 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18a7.946 7.946 0 01-4.054-1.107l-.29-.173-3.007.698.71-2.926-.19-.3A7.944 7.944 0 014 12c0-4.418 3.582-8 8-8s8 3.582 8 8-3.582 8-8 8z"/></svg>
+    Escribir por WhatsApp
+  </a>
+  <small>© 2025 · Viña del Mar, Chile</small>
+</footer>
+
+<script>
+function toggleMenu(m,h){
+  document.getElementById(h).classList.toggle('open');
+  document.getElementById(m).classList.toggle('open');
+  document.body.style.overflow=document.getElementById(m).classList.contains('open')?'hidden':'';
+}
+</script>
+</body>
+</html>

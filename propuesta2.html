@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tradiciones — Productos Artesanales</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,600;1,300;1,600&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#0d0b09;--bg2:#141210;--gold:#c9a84c;--gold2:#f0d080;--white:#f0ece4;--muted:#7a7060;--card:#1a1712}
+body{background:var(--bg);font-family:'Outfit',sans-serif;color:var(--white);overflow-x:hidden}
+nav{display:flex;justify-content:space-between;align-items:center;padding:1.5rem 3rem;border-bottom:1px solid rgba(201,168,76,.12);position:sticky;top:0;z-index:50;background:rgba(13,11,9,.9);backdrop-filter:blur(12px)}
+.logo{font-family:'Cormorant Garamond',serif;font-size:1.5rem;color:var(--white);letter-spacing:.08em;font-weight:300}
+.logo strong{color:var(--gold);font-weight:600}
+nav ul{list-style:none;display:flex;gap:2.5rem}
+nav ul a{color:var(--muted);text-decoration:none;font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;transition:color .2s}
+nav ul a:hover{color:var(--gold)}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer}
+.hamburger span{display:block;width:22px;height:1px;background:var(--white);transition:all .3s}
+.hamburger.open span:nth-child(1){transform:translateY(6px) rotate(45deg)}
+.hamburger.open span:nth-child(2){opacity:0}
+.hamburger.open span:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
+.mobile-menu{display:none;position:fixed;inset:0;background:var(--bg);z-index:100;flex-direction:column;align-items:center;justify-content:center;gap:2.5rem}
+.mobile-menu.open{display:flex}
+.mobile-menu a{color:var(--white);text-decoration:none;font-family:'Cormorant Garamond',serif;font-size:2.5rem;font-weight:300}
+.close-menu{position:absolute;top:1.5rem;right:2rem;background:none;border:none;color:var(--muted);font-size:1.5rem;cursor:pointer}
+.hero{min-height:100vh;display:grid;place-items:center;padding:4rem 3rem;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(201,168,76,.08) 0%,transparent 70%);top:50%;left:50%;transform:translate(-50%,-50%)}
+.hero::after{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23c9a84c' fill-opacity='0.03'%3E%3Cpath d='M20 20.5V18H0v5h5v5H0v5h20v-5h15v5h5V20h-5v-5h5V10H25v5H20V0H15v5H0v5h15v5h5v.5z'/%3E%3C/g%3E%3C/svg%3E")}
+.hero-inner{text-align:center;max-width:800px;position:relative;z-index:1}
+.hero-line{width:60px;height:1px;background:var(--gold);margin:0 auto 2rem;opacity:.6}
+.hero h1{font-family:'Cormorant Garamond',serif;font-size:clamp(3rem,8vw,6.5rem);font-weight:300;line-height:1.05;margin-bottom:1.5rem;letter-spacing:-.01em}
+.hero h1 em{font-style:italic;color:var(--gold)}
+.hero p{color:var(--muted);font-size:1rem;line-height:1.9;margin-bottom:3rem;font-weight:300;max-width:500px;margin-left:auto;margin-right:auto}
+.btn-wsp{display:inline-flex;align-items:center;gap:.7rem;background:#25D366;color:#fff;padding:.9rem 2.2rem;border-radius:2px;text-decoration:none;font-weight:400;font-size:.9rem;letter-spacing:.05em;transition:all .25s;box-shadow:0 0 30px rgba(37,211,102,.2)}
+.btn-wsp:hover{box-shadow:0 0 50px rgba(37,211,102,.4);transform:translateY(-1px)}
+.btn-wsp svg,.btn-card svg,.btn-wsp-big svg{width:18px;height:18px;fill:currentColor}
+.divider-line{display:flex;align-items:center;gap:2rem;padding:4rem 3rem 2rem;max-width:1100px;margin:0 auto}
+.divider-line::before,.divider-line::after{content:'';flex:1;height:1px;background:rgba(201,168,76,.2)}
+.divider-line span{font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--gold);letter-spacing:.2em;text-transform:uppercase;white-space:nowrap}
+.productos{padding:1rem 3rem 6rem;max-width:1100px;margin:0 auto}
+.productos-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1px;background:rgba(201,168,76,.08);border:1px solid rgba(201,168,76,.08)}
+.card{background:var(--card);padding:0;transition:background .3s;overflow:hidden}
+.card:hover{background:#201e1a}
+.card-img{height:200px;display:flex;align-items:center;justify-content:center;font-size:5rem;background:linear-gradient(135deg,#1e1a14,#2a2318);border-bottom:1px solid rgba(201,168,76,.08);position:relative}
+.card-img::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(201,168,76,.3),transparent)}
+.card-body{padding:1.8rem}
+.card-cat{font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);opacity:.7;margin-bottom:.5rem}
+.card-name{font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:600;margin-bottom:.6rem;letter-spacing:.02em}
+.card-desc{font-size:.85rem;color:var(--muted);line-height:1.7;margin-bottom:1.5rem;font-weight:300}
+.card-footer{display:flex;justify-content:space-between;align-items:center;gap:.5rem}
+.card-price{font-family:'Cormorant Garamond',serif;font-size:1.2rem;color:var(--gold)}
+.btn-card{display:inline-flex;align-items:center;gap:.5rem;background:transparent;border:1px solid rgba(37,211,102,.5);color:#25D366;padding:.5rem 1.2rem;text-decoration:none;font-size:.78rem;letter-spacing:.05em;transition:all .25s;white-space:nowrap}
+.btn-card:hover{background:#25D366;color:#fff;border-color:#25D366}
+.nosotros{padding:6rem 3rem;display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:center;max-width:1100px;margin:0 auto}
+.nosotros-text h2{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,4vw,3rem);font-weight:300;line-height:1.2;margin-bottom:1.5rem}
+.nosotros-text h2 em{font-style:italic;color:var(--gold)}
+.nosotros-text p{color:var(--muted);line-height:1.9;font-weight:300;font-size:.95rem}
+.nosotros-stats{display:flex;flex-direction:column;gap:2.5rem;border-left:1px solid rgba(201,168,76,.15);padding-left:3rem}
+.stat-item{display:flex;flex-direction:column;gap:.3rem}
+.stat-num{font-family:'Cormorant Garamond',serif;font-size:3rem;color:var(--gold);font-weight:300;line-height:1}
+.stat-label{font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+footer{border-top:1px solid rgba(201,168,76,.1);padding:4rem 3rem;text-align:center}
+footer p{color:var(--muted);font-size:.88rem;margin-bottom:2rem;font-weight:300}
+.btn-wsp-big{display:inline-flex;align-items:center;gap:.7rem;background:#25D366;color:#fff;padding:1rem 2.5rem;text-decoration:none;font-weight:400;font-size:.95rem;letter-spacing:.05em;transition:all .25s;box-shadow:0 0 30px rgba(37,211,102,.2)}
+.btn-wsp-big:hover{box-shadow:0 0 50px rgba(37,211,102,.4);transform:translateY(-1px)}
+footer small{display:block;margin-top:2.5rem;color:rgba(120,112,96,.4);font-size:.75rem;letter-spacing:.1em}
+@media(max-width:768px){nav{padding:1.2rem 1.5rem}nav ul{display:none!important}.hamburger{display:flex}.hero{padding:3rem 1.5rem}.productos{padding:1rem 0 4rem}.divider-line{padding:3rem 1.5rem 1.5rem}.nosotros{grid-template-columns:1fr;padding:4rem 1.5rem;gap:3rem}.nosotros-stats{border-left:none;border-top:1px solid rgba(201,168,76,.15);padding-left:0;padding-top:2.5rem;flex-direction:row;flex-wrap:wrap;gap:2rem}.btn-wsp-big{width:100%;justify-content:center}.productos-grid{grid-template-columns:1fr}.footer{padding:3rem 1.5rem}}
+</style>
+</head>
+<body>
+<nav>
+  <div class="logo"><strong>Tradiciones</strong> Artesanales</div>
+  <ul><li><a href="#productos">Productos</a></li><li><a href="#nosotros">Nosotros</a></li><li><a href="#contacto">Contacto</a></li></ul>
+  <div class="hamburger" id="hb2" onclick="toggleMenu('mm2','hb2')"><span></span><span></span><span></span></div>
+</nav>
+<div class="mobile-menu" id="mm2">
+  <button class="close-menu" onclick="toggleMenu('mm2','hb2')">✕</button>
+  <a href="#productos" onclick="toggleMenu('mm2','hb2')">Productos</a>
+  <a href="#nosotros" onclick="toggleMenu('mm2','hb2')">Nosotros</a>
+  <a href="#contacto" onclick="toggleMenu('mm2','hb2')">Contacto</a>
+</div>
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-line"></div>
+    <h1>El sabor de lo <em>auténtico</em></h1>
+    <p>Embutidos y dulces elaborados a mano, con ingredientes frescos y recetas que no cambian con el tiempo.</p>
+    <a href="https://wa.me/56912345678?text=Hola!%20Vi%20su%20página%20y%20quiero%20consultar" class="btn-wsp" target="_blank">
+      <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M11.999 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2.546 21l3.918-.91A9.955 9.955 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18a7.946 7.946 0 01-4.054-1.107l-.29-.173-3.007.698.71-2.926-.19-.3A7.944 7.944 0 014 12c0-4.418 3.582-8 8-8s8 3.582 8 8-3.582 8-8 8z"/></svg>
+      Consultar por WhatsApp
+    </a>
+  </div>
+</section>
+<div class="divider-line"><span>Catálogo</span></div>
+<section class="productos" id="productos">
+  <div class="productos-grid">
+    <div class="card"><div class="card-img">🍪</div><div class="card-body"><div class="card-cat">Dulces Tradicionales</div><div class="card-name">Alfajores</div><p class="card-desc">Masa suave con manjar natural, espolvoreados con azúcar flor. Docena disponible con o sin cobertura.</p><div class="card-footer"><span class="card-price">$4.500 / docena</span><a href="https://wa.me/56912345678?text=Me%20interesan%20los%20Alfajores" class="btn-card" target="_blank"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M11.999 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2.546 21l3.918-.91A9.955 9.955 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18a7.946 7.946 0 01-4.054-1.107l-.29-.173-3.007.698.71-2.926-.19-.3A7.944 7.944 0 014 12c0-4.418 3.582-8 8-8s8 3.582 8 8-3.582 8-8 8z"/></svg> Consultar</a></div></div></div>
+    <div class="card"><div class="card-img">🌭</div><div class="card-body"><div class="card-cat">Embutidos</div><div class="card-name">Chorizos</div><p class="card-desc">Carne de cerdo seleccionada con especias naturales. Ideales para asado, cazuela o para laminar.</p><div class="card-footer"><span class="card-price">$3.800 / kg</span><a href="https://wa.me/56912345678?text=Me%20interesan%20los%20Chorizos" class="btn-card" target="_blank"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M11.999 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2.546 21l3.918-.91A9.955 9.955 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18a7.946 7.946 0 01-4.054-1.107l-.29-.173-3.007.698.71-2.926-.19-.3A7.944 7.944 0 014 12c0-4.418 3.582-8 8-8s8 3.582 8 8-3.582 8-8 8z"/></svg> Consultar</a></div></div></div>
+    <div class="card"><div class="card-img">🩸</div><div class="card-body"><div class="card-cat">Embutidos</div><div class="card-name">Prietas</div><p class="card-desc">Receta tradicional chilena con sangre de cerdo, arroz y especias. Un clásico del asado.</p><div class="card-footer"><span class="card-price">$3.200 / kg</span><a href="https://wa.me/56912345678?text=Me%20interesan%20las%20Prietas" class="btn-card" target="_blank"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M11.999 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2.546 21l3.918-.91A9.955 9.955 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18a7.946 7.946 0 01-4.054-1.107l-.29-.173-3.007.698.71-2.926-.19-.3A7.944 7.944 0 014 12c0-4.418 3.582-8 8-8s8 3.582 8 8-3.582 8-8 8z"/></svg> Consultar</a></div></div></div>
+    <div class="card"><div class="card-img">🥩</div><div class="card-body"><div class="card-cat">Embutidos</div><div class="card-name">Arrollado Huaso</div><p class="card-desc">Plancha de cerdo enrollada con ají de color, ajo y especias artesanales. Para laminarlo y compartir.</p><div class="card-footer"><span class="card-price">$5.500 / kg</span><a href="https://wa.me/56912345678?text=Me%20interesa%20el%20Arrollado%20Huaso" class="btn-card" target="_blank"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M11.999 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2.546 21l3.918-.91A9.955 9.955 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18a7.946 7.946 0 01-4.054-1.107l-.29-.173-3.007.698.71-2.926-.19-.3A7.944 7.944 0 014 12c0-4.418 3.582-8 8-8s8 3.582 8 8-3.582 8-8 8z"/></svg> Consultar</a></div></div></div>
+    <div class="card"><div class="card-img">🍬</div><div class="card-body"><div class="card-cat">Dulces Tradicionales</div><div class="card-name">Cuchuflíes</div><p class="card-desc">Barquillos crujientes rellenos con manjar casero. El dulce de siempre, hecho a mano con cariño.</p><div class="card-footer"><span class="card-price">$2.800 / docena</span><a href="https://wa.me/56912345678?text=Me%20interesan%20los%20Cuchuflies" class="btn-card" target="_blank"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M11.999 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2.546 21l3.918-.91A9.955 9.955 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18a7.946 7.946 0 01-4.054-1.107l-.29-.173-3.007.698.71-2.926-.19-.3A7.944 7.944 0 014 12c0-4.418 3.582-8 8-8s8 3.582 8 8-3.582 8-8 8z"/></svg> Consultar</a></div></div></div>
+  </div>
+</section>
+<section class="nosotros" id="nosotros">
+  <div class="nosotros-text">
+    <h2>Recetas que el <em>tiempo no borra</em></h2>
+    <p>Elaboramos cada producto con la misma dedicación de siempre. Sin atajos, sin conservantes artificiales — solo ingredientes de calidad y el saber-hacer de décadas.</p>
+  </div>
+  <div class="nosotros-stats">
+    <div class="stat-item"><span class="stat-num">+20</span><span class="stat-label">Años elaborando</span></div>
+    <div class="stat-item"><span class="stat-num">100%</span><span class="stat-label">Sin conservantes</span></div>
+    <div class="stat-item"><span class="stat-num">+300</span><span class="stat-label">Clientes fieles</span></div>
+  </div>
+</section>
+<footer id="contacto">
+  <p>Para pedidos y consultas, escríbenos directamente</p>
+  <a href="https://wa.me/56912345678?text=Hola!%20Quiero%20consultar%20sobre%20sus%20productos" class="btn-wsp-big" target="_blank">
+    <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M11.999 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2.546 21l3.918-.91A9.955 9.955 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18a7.946 7.946 0 01-4.054-1.107l-.29-.173-3.007.698.71-2.926-.19-.3A7.944 7.944 0 014 12c0-4.418 3.582-8 8-8s8 3.582 8 8-3.582 8-8 8z"/></svg>
+    Escribir por WhatsApp
+  </a>
+  <small>© 2025 Tradiciones Artesanales · Viña del Mar, Chile</small>
+</footer>
+<script>
+function toggleMenu(m,h){document.getElementById(h).classList.toggle('open');document.getElementById(m).classList.toggle('open');document.body.style.overflow=document.getElementById(m).classList.contains('open')?'hidden':'';}
+</script>
+</body>
+</html>
