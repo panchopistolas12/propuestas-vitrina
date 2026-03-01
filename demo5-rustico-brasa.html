@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Daniel Silva — Cecinas Artesanales</title>
+<link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --negro:#100d08;
+  --carbon:#1a1510;
+  --brasa:#c44a1a;
+  --naranja:#e8762a;
+  --dorado:#d4a53a;
+  --crema:#f5ead6;
+  --humo:#2e2519;
+  --muted:#9a8a70;
+}
+body{background:var(--negro);font-family:'DM Sans',sans-serif;color:var(--crema);overflow-x:hidden}
+
+/* Textura fuego */
+body::before{
+  content:'';position:fixed;inset:0;
+  background:radial-gradient(ellipse 80% 60% at 50% 100%, rgba(196,74,26,.06) 0%,transparent 70%);
+  pointer-events:none;z-index:0
+}
+
+/* NAV */
+nav{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:1.2rem 2.5rem;
+  background:rgba(16,13,8,.95);
+  border-bottom:1px solid rgba(212,165,58,.15);
+  position:sticky;top:0;z-index:50;
+  backdrop-filter:blur(10px);
+}
+.logo{
+  display:flex;flex-direction:column;line-height:1;
+}
+.logo-nombre{
+  font-family:'Abril Fatface',serif;
+  font-size:1.4rem;color:var(--crema);letter-spacing:.04em;
+}
+.logo-sub{
+  font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--dorado);font-weight:300;margin-top:2px;
+}
+nav ul{list-style:none;display:flex;gap:2rem}
+nav ul a{
+  color:rgba(245,234,214,.5);text-decoration:none;
+  font-size:.8rem;font-weight:400;letter-spacing:.1em;text-transform:uppercase;
+  transition:color .2s;
+}
+nav ul a:hover{color:var(--naranja)}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer}
+.hamburger span{display:block;width:22px;height:1.5px;background:var(--crema);transition:all .3s}
+.hamburger.open span:nth-child(1){transform:translateY(6.5px) rotate(45deg)}
+.hamburger.open span:nth-child(2){opacity:0}
+.hamburger.open span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg)}
+.mobile-menu{
+  display:none;position:fixed;inset:0;
+  background:var(--negro);z-index:100;
+  flex-direction:column;align-items:center;justify-content:center;
+  gap:0;
+}
+.mobile-menu.open{display:flex}
+.mobile-menu-logo{
+  font-family:'Abril Fatface',serif;font-size:1.8rem;color:var(--crema);
+  margin-bottom:.2rem;
+}
+.mobile-menu-sub{
+  font-size:.62rem;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--dorado);margin-bottom:2.5rem;
+}
+.mobile-menu-line{
+  width:40px;height:1px;background:rgba(212,165,58,.3);margin-bottom:2.5rem;
+}
+.mobile-menu-links{
+  display:flex;flex-direction:column;align-items:center;gap:0;width:100%;
+}
+.mobile-menu a{
+  color:rgba(245,234,214,.6);text-decoration:none;
+  font-family:'Abril Fatface',serif;font-size:2.2rem;
+  transition:all .2s;padding:.6rem 0;
+  border-bottom:1px solid rgba(212,165,58,.08);
+  width:100%;text-align:center;
+}
+.mobile-menu a:last-child{border-bottom:none}
+.mobile-menu a:hover{color:var(--naranja);background:rgba(196,74,26,.06)}
+.mobile-menu-wsp{
+  margin-top:3rem;
+  display:flex;align-items:center;justify-content:center;gap:.6rem;
+  background:#25D366;color:#fff;
+  padding:.8rem 2.5rem;text-decoration:none;
+  font-family:'DM Sans',sans-serif;font-weight:600;font-size:.9rem;
+}
+.close-menu{
+  position:absolute;top:1.5rem;right:2rem;
+  background:none;border:none;
+  color:var(--muted);font-size:1.5rem;cursor:pointer;
+  transition:color .2s;
+}
+.close-menu:hover{color:var(--crema)}
+
+/* HERO */
+.hero{
+  min-height:100vh;
+  display:flex;flex-direction:column;justify-content:flex-end;
+  padding:4rem 3rem 5rem;
+  position:relative;overflow:hidden;
+  background:
+    linear-gradient(to top, rgba(16,13,8,1) 0%, rgba(16,13,8,.7) 40%, rgba(16,13,8,.2) 100%),
+    radial-gradient(ellipse 100% 80% at 60% 40%, rgba(196,74,26,.3) 0%,transparent 60%),
+    linear-gradient(135deg, #1a1510 0%, #2e2519 50%, #1a1206 100%);
+}
+/* Brazas animadas */
+.brasas{
+  position:absolute;inset:0;overflow:hidden;pointer-events:none;
+}
+.brasa{
+  position:absolute;
+  border-radius:50%;
+  animation:subirbrasa 4s ease-in infinite;
+  opacity:0;
+}
+.brasa:nth-child(1){width:4px;height:4px;background:var(--brasa);left:20%;animation-delay:0s;animation-duration:3.5s}
+.brasa:nth-child(2){width:3px;height:3px;background:var(--dorado);left:40%;animation-delay:1s;animation-duration:4s}
+.brasa:nth-child(3){width:5px;height:5px;background:var(--naranja);left:65%;animation-delay:.5s;animation-duration:3s}
+.brasa:nth-child(4){width:3px;height:3px;background:var(--brasa);left:80%;animation-delay:1.5s;animation-duration:4.5s}
+.brasa:nth-child(5){width:4px;height:4px;background:var(--dorado);left:55%;animation-delay:2s;animation-duration:3.8s}
+@keyframes subirbrasa{
+  0%{transform:translateY(0) scale(1);opacity:.8}
+  50%{transform:translateY(-200px) scale(.6);opacity:.4}
+  100%{transform:translateY(-400px) scale(.2);opacity:0}
+}
+
+.hero-content{position:relative;z-index:1;max-width:800px;}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:.6rem;
+  border:1px solid rgba(212,165,58,.35);
+  color:var(--dorado);padding:.4rem 1.1rem;
+  font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;
+  margin-bottom:2rem;font-weight:400;
+  background:rgba(212,165,58,.06);
+}
+.hero h1{
+  font-family:'Abril Fatface',serif;
+  font-size:clamp(3.5rem,9vw,7rem);
+  color:var(--crema);line-height:.95;
+  margin-bottom:1rem;
+}
+.hero h1 span{
+  color:var(--brasa);
+  display:block;
+}
+.hero-desc{
+  font-family:'Crimson Pro',serif;
+  font-size:clamp(1.1rem,2vw,1.35rem);
+  color:rgba(245,234,214,.65);
+  line-height:1.75;margin-bottom:2.5rem;
+  max-width:520px;font-weight:300;font-style:italic;
+}
+.hero-tags{display:flex;flex-wrap:wrap;gap:.6rem;margin-bottom:2.5rem}
+.hero-tag-item{
+  background:rgba(196,74,26,.15);border:1px solid rgba(196,74,26,.3);
+  color:rgba(245,234,214,.8);
+  padding:.3rem .9rem;font-size:.75rem;font-weight:400;letter-spacing:.06em;
+}
+.btn-wsp{
+  display:inline-flex;align-items:center;gap:.7rem;
+  background:#25D366;color:#fff;
+  padding:1rem 2.2rem;
+  text-decoration:none;font-weight:600;font-size:.95rem;
+  transition:all .25s;
+  box-shadow:0 0 40px rgba(37,211,102,.25);
+}
+.btn-wsp:hover{box-shadow:0 0 60px rgba(37,211,102,.5);transform:translateY(-2px)}
+.btn-wsp svg,.btn-card svg,.btn-wsp-big svg{width:18px;height:18px;fill:currentColor}
+
+/* DIFERENCIADORES */
+.diferenciales{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  border-top:1px solid rgba(212,165,58,.12);
+  border-bottom:1px solid rgba(212,165,58,.12);
+  position:relative;z-index:1;
+}
+.dif-item{
+  padding:2rem;
+  border-right:1px solid rgba(212,165,58,.12);
+  text-align:center;
+}
+.dif-item:last-child{border-right:none}
+.dif-icon{font-size:2rem;margin-bottom:.7rem;display:block}
+.dif-title{font-family:'Abril Fatface',serif;font-size:1rem;color:var(--dorado);margin-bottom:.3rem}
+.dif-text{font-size:.78rem;color:var(--muted);line-height:1.5;font-weight:300}
+
+/* PRODUCTOS */
+.productos-header{
+  padding:4rem 3rem 2.5rem;
+  display:flex;justify-content:space-between;align-items:flex-end;
+  border-bottom:1px solid rgba(212,165,58,.1);
+}
+.productos-header h2{
+  font-family:'Abril Fatface',serif;
+  font-size:clamp(2rem,5vw,3.5rem);color:var(--crema);line-height:1;
+}
+.productos-header h2 span{color:var(--brasa)}
+.productos-header p{color:var(--muted);font-size:.85rem;max-width:220px;text-align:right;line-height:1.6;font-weight:300}
+
+.productos-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(310px,1fr));
+  gap:1px;
+  background:rgba(212,165,58,.08);
+}
+.card{
+  background:var(--carbon);padding:0;
+  transition:background .3s;
+  overflow:hidden;
+}
+.card:hover{background:#201a12}
+.card-img{
+  height:220px;
+  overflow:hidden;position:relative;
+  border-bottom:1px solid rgba(212,165,58,.1);
+}
+.card-img img{
+  width:100%;height:100%;
+  object-fit:cover;
+  filter:brightness(.85) saturate(1.1);
+  transition:transform .4s;
+}
+.card:hover .card-img img{transform:scale(1.04)}
+.card-img-placeholder{
+  width:100%;height:100%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:5rem;
+  background:linear-gradient(135deg,#221a10,#2e2215);
+}
+.card-badge{
+  position:absolute;bottom:12px;left:12px;
+  background:var(--brasa);color:#fff;
+  padding:.25rem .7rem;font-size:.65rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
+}
+.card-body{padding:1.6rem}
+.card-cat{
+  font-size:.65rem;text-transform:uppercase;letter-spacing:.15em;
+  color:var(--dorado);opacity:.8;margin-bottom:.4rem;font-weight:400;
+}
+.card-name{
+  font-family:'Abril Fatface',serif;font-size:1.4rem;
+  color:var(--crema);margin-bottom:.6rem;
+}
+.card-desc{
+  font-family:'Crimson Pro',serif;
+  font-size:.95rem;color:var(--muted);line-height:1.7;
+  margin-bottom:1.5rem;font-style:italic;font-weight:300;
+}
+.card-footer{display:flex;justify-content:space-between;align-items:center;gap:.5rem}
+.card-price{
+  font-family:'Abril Fatface',serif;font-size:1.2rem;color:var(--naranja);
+}
+.btn-card{
+  display:inline-flex;align-items:center;gap:.5rem;
+  background:transparent;border:1px solid rgba(37,211,102,.5);
+  color:#25D366;padding:.55rem 1.2rem;
+  text-decoration:none;font-size:.8rem;font-weight:500;
+  transition:all .2s;white-space:nowrap;
+}
+.btn-card:hover{background:#25D366;color:#fff;border-color:#25D366}
+
+/* HISTORIA */
+.historia{
+  display:grid;grid-template-columns:1fr 1fr;
+  border-top:1px solid rgba(212,165,58,.1);
+}
+.historia-left{
+  padding:5rem 3rem;
+  background:var(--humo);
+  border-right:1px solid rgba(212,165,58,.1);
+}
+.historia-left h2{
+  font-family:'Abril Fatface',serif;
+  font-size:clamp(2rem,4vw,3rem);color:var(--crema);
+  margin-bottom:1.5rem;line-height:1.1;
+}
+.historia-left h2 em{color:var(--brasa);font-style:italic}
+.historia-left p{
+  font-family:'Crimson Pro',serif;
+  color:rgba(245,234,214,.6);line-height:1.9;
+  font-size:1rem;font-weight:300;margin-bottom:1rem;
+}
+.historia-right{
+  padding:5rem 3rem;
+  display:flex;flex-direction:column;gap:2.5rem;
+}
+.stat-row{
+  padding-bottom:2.5rem;
+  border-bottom:1px solid rgba(212,165,58,.1);
+}
+.stat-row:last-child{border-bottom:none;padding-bottom:0}
+.stat-big{
+  font-family:'Abril Fatface',serif;
+  font-size:3.5rem;color:var(--brasa);line-height:1;
+}
+.stat-label{
+  font-family:'Crimson Pro',serif;
+  font-size:1rem;color:var(--muted);margin-top:.3rem;font-style:italic;
+}
+
+/* FOOTER */
+footer{
+  background:var(--negro);
+  border-top:1px solid rgba(196,74,26,.25);
+  padding:3.5rem 3rem;
+  display:flex;justify-content:space-between;align-items:center;
+  flex-wrap:wrap;gap:2rem;
+}
+.footer-left{}
+.footer-logo{
+  font-family:'Abril Fatface',serif;
+  font-size:1.6rem;color:var(--crema);
+}
+footer small{display:block;color:var(--muted);font-size:.75rem;margin-top:.4rem}
+.btn-wsp-big{
+  display:inline-flex;align-items:center;gap:.7rem;
+  background:#25D366;color:#fff;padding:1rem 2.2rem;
+  text-decoration:none;font-weight:600;font-size:.95rem;
+  transition:all .25s;box-shadow:0 0 30px rgba(37,211,102,.2);
+}
+.btn-wsp-big:hover{box-shadow:0 0 50px rgba(37,211,102,.4);transform:translateY(-2px)}
+
+@media(max-width:900px){
+  .diferenciales{grid-template-columns:repeat(2,1fr)}
+  .dif-item:nth-child(2){border-right:none}
+  .dif-item:nth-child(3){border-right:1px solid rgba(212,165,58,.12)}
+  .dif-item:nth-child(3),.dif-item:nth-child(4){border-top:1px solid rgba(212,165,58,.12)}
+  .historia{grid-template-columns:1fr}
+  .historia-left{border-right:none;border-bottom:1px solid rgba(212,165,58,.1)}
+}
+@media(max-width:768px){
+  nav{padding:1rem 1.5rem}
+  nav ul{display:none!important}
+  .hamburger{display:flex}
+  .hero{padding:3rem 1.5rem 4rem;min-height:90vh}
+  .hero h1{font-size:3.2rem}
+  .diferenciales{grid-template-columns:1fr 1fr}
+  .productos-header{padding:3rem 1.5rem 2rem;flex-direction:column;align-items:flex-start;gap:1rem}
+  .productos-header p{text-align:left;max-width:100%}
+  .productos-grid{grid-template-columns:1fr}
+  .historia-left,.historia-right{padding:3.5rem 1.5rem}
+  footer{padding:3rem 1.5rem;flex-direction:column;align-items:flex-start}
+  .btn-wsp-big{width:100%;justify-content:center}
+}
+</style>
+</head>
+<body>
+
+<div class="brasas">
+  <div class="brasa"></div>
+  <div class="brasa"></div>
+  <div class="brasa"></div>
+  <div class="brasa"></div>
+  <div class="brasa"></div>
+</div>
+
+<nav>
+  <div class="logo">
+    <div class="logo-nombre">Daniel Silva</div>
+    <div class="logo-sub">Cecinas Artesanales · Viña del Mar</div>
+  </div>
+  <ul>
+    <li><a href="#productos">Productos</a></li>
+    <li><a href="#nosotros">Nosotros</a></li>
+    <li><a href="#contacto">Contacto</a></li>
+  </ul>
+  <div class="hamburger" id="hb5" onclick="toggleMenu('mm5','hb5')"><span></span><span></span><span></span></div>
+</nav>
+
+<div class="mobile-menu" id="mm5">
+  <button class="close-menu" onclick="toggleMenu('mm5','hb5')">✕</button>
+  <div class="mobile-menu-logo">Daniel Silva</div>
+  <div class="mobile-menu-sub">Cecinas Artesanales</div>
+  <div class="mobile-menu-line"></div>
+  <div class="mobile-menu-links">
+    <a href="#productos" onclick="toggleMenu('mm5','hb5')">Productos</a>
+    <a href="#nosotros" onclick="toggleMenu('mm5','hb5')">Nosotros</a>
+    <a href="#contacto" onclick="toggleMenu('mm5','hb5')">Contacto</a>
+  </div>
+  <a href="https://wa.me/56912345678" class="mobile-menu-wsp" target="_blank">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M11.999 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2.546 21l3.918-.91A9.955 9.955 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18a7.946 7.946 0 01-4.054-1.107l-.29-.173-3.007.698.71-2.926-.19-.3A7.944 7.944 0 014 12c0-4.418 3.582-8 8-8s8 3.582 8 8-3.582 8-8 8z"/></svg>
+    WhatsApp
+  </a>
+</div>
+
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-badge">🔥 Ahumados con leña nativa · Sin químicos</div>
+    <h1>Sabor que<span>no miente</span></h1>
+    <p class="hero-desc">Longanizas, chorizos, prietas y queso mantecoso. Productos naturales de Pichihuillinco — ahumados con leña nativa, sin conservantes y que no repiten.</p>
+    <div class="hero-tags">
+      <span class="hero-tag-item">🌿 100% Natural</span>
+      <span class="hero-tag-item">🪵 Ahumado con leña nativa</span>
+      <span class="hero-tag-item">⚗️ Sin químicos</span>
+      <span class="hero-tag-item">✅ No repiten</span>
+    </div>
+    <a href="https://wa.me/56912345678?text=Hola%20Daniel!%20Vi%20tu%20página%20y%20quiero%20consultar%20sobre%20tus%20productos" class="btn-wsp" target="_blank">
+      <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M11.999 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2.546 21l3.918-.91A9.955 9.955 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18a7.946 7.946 0 01-4.054-1.107l-.29-.173-3.007.698.71-2.926-.19-.3A7.944 7.944 0 014 12c0-4.418 3.582-8 8-8s8 3.582 8 8-3.582 8-8 8z"/></svg>
+      Consultar por WhatsApp
+    </a>
+  </div>
+</section>
+
+<div class="diferenciales">
+  <div class="dif-item">
+    <span class="dif-icon">🌿</span>
+    <div class="dif-title">Sin químicos</div>
+    <p class="dif-text">Productos 100% naturales sin conservantes artificiales</p>
+  </div>
+  <div class="dif-item">
+    <span class="dif-icon">🪵</span>
+    <div class="dif-title">Leña nativa</div>
+    <p class="dif-text">Ahumados con leña de bosque nativo chileno</p>
+  </div>
+  <div class="dif-item">
+    <span class="dif-icon">✅</span>
+    <div class="dif-title">No repiten</div>
+    <p class="dif-text">Sin los gases que generan los químicos artificiales</p>
+  </div>
+  <div class="dif-item">
+    <span class="dif-icon">🏔️</span>
+    <div class="dif-title">Pichihuillinco</div>
+    <p class="dif-text">Origen Contulmo, Chile — tradición cecinas del sur</p>
+  </div>
+</div>
+
+<div class="productos-header" id="productos">
+  <h2>Nuestro<br><span>catálogo</span></h2>
+  <p>Todo fresco y directo desde el productor hasta tu mesa</p>
+</div>
+
+<div class="productos-grid">
+
+  <div class="card">
+    <div class="card-img">
+      <img src="/mnt/user-data/uploads/1772336940401_image.png" alt="Longanizas artesanales" onerror="this.parentElement.innerHTML='<div class=\'card-img-placeholder\'>🌭</div><span class=\'card-badge\'>Ahumadas</span>'">
+      <span class="card-badge">Ahumadas</span>
+    </div>
+    <div class="card-body">
+      <div class="card-cat">Cecinas</div>
+      <div class="card-name">Longanizas</div>
+      <p class="card-desc">Ahumadas con leña nativa, naturales y sin químicos. No repiten. Elaboradas con receta original de Pichihuillinco.</p>
+      <div class="card-footer">
+        <span class="card-price">Consultar</span>
+        <a href="https://wa.me/56912345678?text=Hola!%20Me%20interesan%20las%20Longanizas" class="btn-card" target="_blank">
+          <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M11.999 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2.546 21l3.918-.91A9.955 9.955 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18a7.946 7.946 0 01-4.054-1.107l-.29-.173-3.007.698.71-2.926-.19-.3A7.944 7.944 0 014 12c0-4.418 3.582-8 8-8s8 3.582 8 8-3.582 8-8 8z"/></svg>
+          Consultar
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-img">
+      <div class="card-img-placeholder">🩸</div>
+      <span class="card-badge">Clásicas</span>
+    </div>
+    <div class="card-body">
+      <div class="card-cat">Cecinas</div>
+      <div class="card-name">Prietas</div>
+      <p class="card-desc">Receta tradicional del campo chileno. Sangre de cerdo con arroz y especias naturales. El infaltable del asado.</p>
+      <div class="card-footer">
+        <span class="card-price">Consultar</span>
+        <a href="https://wa.me/56912345678?text=Hola!%20Me%20interesan%20las%20Prietas" class="btn-card" target="_blank">
+          <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M11.999 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2.546 21l3.918-.91A9.955 9.955 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18a7.946 7.946 0 01-4.054-1.107l-.29-.173-3.007.698.71-2.926-.19-.3A7.944 7.944 0 014 12c0-4.418 3.582-8 8-8s8 3.582 8 8-3.582 8-8 8z"/></svg>
+          Consultar
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-img">
+      <div class="card-img-placeholder">🥩</div>
+      <span class="card-badge">Tradicional</span>
+    </div>
+    <div class="card-body">
+      <div class="card-cat">Cecinas</div>
+      <div class="card-name">Arrollado Huaso</div>
+      <p class="card-desc">Plancha de cerdo con ají de color, ajo y especias. Listo para laminar. Sabor campesino auténtico del sur.</p>
+      <div class="card-footer">
+        <span class="card-price">Consultar</span>
+        <a href="https://wa.me/56912345678?text=Hola!%20Me%20interesa%20el%20Arrollado%20Huaso" class="btn-card" target="_blank">
+          <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M11.999 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2.546 21l3.918-.91A9.955 9.955 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18a7.946 7.946 0 01-4.054-1.107l-.29-.173-3.007.698.71-2.926-.19-.3A7.944 7.944 0 014 12c0-4.418 3.582-8 8-8s8 3.582 8 8-3.582 8-8 8z"/></svg>
+          Consultar
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-img">
+      <div class="card-img-placeholder">🧀</div>
+      <span class="card-badge">100% Natural</span>
+    </div>
+    <div class="card-body">
+      <div class="card-cat">Lácteos</div>
+      <div class="card-name">Queso Mantecoso</div>
+      <p class="card-desc">Queso mantecoso de Pichihuillinco, elaborado con leche natural sin aditivos. Suave, cremoso y de sabor auténtico.</p>
+      <div class="card-footer">
+        <span class="card-price">Consultar</span>
+        <a href="https://wa.me/56912345678?text=Hola!%20Me%20interesa%20el%20Queso%20Mantecoso" class="btn-card" target="_blank">
+          <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M11.999 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2.546 21l3.918-.91A9.955 9.955 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18a7.946 7.946 0 01-4.054-1.107l-.29-.173-3.007.698.71-2.926-.19-.3A7.944 7.944 0 014 12c0-4.418 3.582-8 8-8s8 3.582 8 8-3.582 8-8 8z"/></svg>
+          Consultar
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-img">
+      <div class="card-img-placeholder">🍪</div>
+      <span class="card-badge">Dulces</span>
+    </div>
+    <div class="card-body">
+      <div class="card-cat">Repostería</div>
+      <div class="card-name">Alfajores</div>
+      <p class="card-desc">Masa suave con manjar natural entre dos galletas tradicionales. Espolvoreados con azúcar flor, por docena.</p>
+      <div class="card-footer">
+        <span class="card-price">Consultar</span>
+        <a href="https://wa.me/56912345678?text=Hola!%20Me%20interesan%20los%20Alfajores" class="btn-card" target="_blank">
+          <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M11.999 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2.546 21l3.918-.91A9.955 9.955 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18a7.946 7.946 0 01-4.054-1.107l-.29-.173-3.007.698.71-2.926-.19-.3A7.944 7.944 0 014 12c0-4.418 3.582-8 8-8s8 3.582 8 8-3.582 8-8 8z"/></svg>
+          Consultar
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-img">
+      <div class="card-img-placeholder">🍬</div>
+      <span class="card-badge">Dulces</span>
+    </div>
+    <div class="card-body">
+      <div class="card-cat">Repostería</div>
+      <div class="card-name">Cuchuflíes</div>
+      <p class="card-desc">Barquillos crujientes con manjar casero. El dulce de la infancia, hecho con la receta de siempre. Por docena.</p>
+      <div class="card-footer">
+        <span class="card-price">Consultar</span>
+        <a href="https://wa.me/56912345678?text=Hola!%20Me%20interesan%20los%20Cuchuflies" class="btn-card" target="_blank">
+          <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M11.999 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2.546 21l3.918-.91A9.955 9.955 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18a7.946 7.946 0 01-4.054-1.107l-.29-.173-3.007.698.71-2.926-.19-.3A7.944 7.944 0 014 12c0-4.418 3.582-8 8-8s8 3.582 8 8-3.582 8-8 8z"/></svg>
+          Consultar
+        </a>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<section class="historia" id="nosotros">
+  <div class="historia-left">
+    <h2>Productos que <em>hablan solos</em></h2>
+    <p>Revendemos las cecinas de Pichihuillinco — una de las marcas más respetadas del sur de Chile. Productos elaborados con receta original, sin químicos y ahumados con leña nativa de bosque nativo.</p>
+    <p>La diferencia es simple: cuando un producto es natural de verdad, lo notás en el sabor y en que no te hace mal. No repiten, no tienen químicos raros — solo carne y especias como siempre fue.</p>
+  </div>
+  <div class="historia-right">
+    <div class="stat-row">
+      <div class="stat-big">0</div>
+      <div class="stat-label">Conservantes artificiales — todo natural</div>
+    </div>
+    <div class="stat-row">
+      <div class="stat-big">🪵</div>
+      <div class="stat-label">Ahumados con leña nativa chilena</div>
+    </div>
+    <div class="stat-row">
+      <div class="stat-big">✓</div>
+      <div class="stat-label">No repiten — garantido</div>
+    </div>
+  </div>
+</section>
+
+<footer id="contacto">
+  <div class="footer-left">
+    <div class="footer-logo">Daniel Silva</div>
+    <small>Cecinas Artesanales · Viña del Mar, Chile</small>
+  </div>
+  <a href="https://wa.me/56912345678?text=Hola%20Daniel!%20Quiero%20hacer%20un%20pedido" class="btn-wsp-big" target="_blank">
+    <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M11.999 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2.546 21l3.918-.91A9.955 9.955 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18a7.946 7.946 0 01-4.054-1.107l-.29-.173-3.007.698.71-2.926-.19-.3A7.944 7.944 0 014 12c0-4.418 3.582-8 8-8s8 3.582 8 8-3.582 8-8 8z"/></svg>
+    Escribir a Daniel
+  </a>
+</footer>
+
+<script>
+function toggleMenu(m,h){
+  document.getElementById(h).classList.toggle('open');
+  document.getElementById(m).classList.toggle('open');
+  document.body.style.overflow=document.getElementById(m).classList.contains('open')?'hidden':'';
+}
+</script>
+</body>
+</html>
